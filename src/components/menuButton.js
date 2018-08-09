@@ -5,7 +5,7 @@ import {
 } from 'native-base';
 
 export default class MenuButton extends Component {
-  render () {
+  render() {
     return (
       <Button transparent onPress={() => this.props.navigation.toggleDrawer()}>
         <Icon name="menu"/>

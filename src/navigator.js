@@ -75,7 +75,7 @@ const Navigator = createDrawerNavigator(
   {
     initialRouteName: 'Print',
     contentOptions: {
-      // activeTintColor: "#e91e63",
+      activeTintColor: "#e91e63",
     },
     contentComponent: ((props) => <SideBar {...props} />)
   }
