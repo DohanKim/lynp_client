@@ -11,8 +11,8 @@ import {
   Icon,
   Button,
   Fab,
-  List,
-  ListItem,
+  Card,
+  CardItem,
   Thumbnail,
   Item,
   Text,
@@ -33,8 +33,13 @@ export default class MyAccount extends Component {
           </Body>
           <Right />
         </Header>
-        <Content>
-          <Button onPress={() => this.props.navigation.navigate('Auth')}>
+        <Content style={styles.content}>
+          <Card>
+            <CardItem header>
+              <Text>{Global.username}</Text>
+            </CardItem>
+          </Card>
+          <Button style={styles.signOut} full onPress={() => this.props.navigation.navigate('Auth')}>
             <Text>Sign out</Text>
           </Button>
         </Content>
@@ -43,3 +48,11 @@ export default class MyAccount extends Component {
   }
 }
 
+const styles = {
+  content: {
+    padding: 10,
+  },
+  signOut: {
+    marginTop: 60,
+  },
+};
