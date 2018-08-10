@@ -25,7 +25,7 @@ export default class MyPrinters extends Component {
 		super(props);
 
 		this.state = {
-			printers : null,
+			printers : [],
 		}
 	}
 
@@ -50,8 +50,14 @@ export default class MyPrinters extends Component {
   }
 
   render() {
-    let listItems = <Text>No Printer Yet</Text>;
-    if (this.state.printers) {
+    let listItems = (
+      <ListItem>
+        <Body>
+          <Text>No Printer Yet</Text>
+        </Body>
+      </ListItem>
+    );
+    if (this.state.printers.length > 0) {
       listItems = this.state.printers.map((printer, i) => {
         return (
           <ListItem key={i}>
