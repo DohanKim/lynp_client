@@ -40,7 +40,7 @@ const PaymentStack = createStackNavigator(
     NewCard: {screen: NewCard},
   },
   {
-    initialRouteName: 'MyPrinters',
+    initialRouteName: 'ChargeBalance',
     headerMode: 'none',
   }
 );
