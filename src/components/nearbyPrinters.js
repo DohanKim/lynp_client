@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {
   View,
   Spinner,
+  Item,
   Container,
   Header,
   Left,
@@ -10,10 +11,17 @@ import {
   Body,
   Icon,
   Title,
+  Text,
+  Grid,
+  Col,
+  Row,
+  Card,
+  CardItem,
 } from 'native-base';
 import MenuButton from './menuButton';
 import MapView, {Marker, Callout} from 'react-native-maps';
 import Global from '../global';
+import MarkerImage from '../../assets/marker_image.png';
 
 export default class NearbyPrinters extends Component {
   constructor(props) {
@@ -70,13 +78,25 @@ export default class NearbyPrinters extends Component {
           // TODO: change marker icon
           // Showing Route?
           <Marker key={printer._id}
-            coordinate={{latitude: printer.location[0], longitude: printer.location[1]}}
-            title={printer.name}
-            onPress={() => {
-              // TODO: show printer detail popup
-              this.props.navigation.navigate('RequestPrint', {printer: printer});
-            }}
-          />);
+            image={MarkerImage}
+            coordinate={{latitude: printer.location[0], longitude: printer.location[1]}}>
+            <Callout tooltip={true} onPress={() => this.props.navigation.navigate('RequestPrint', {printer: printer})}>
+              <Card>
+              <Grid>
+                <Col size={1} style={styles.costCol}>
+                  <Icon style={styles.costIcon} active name='coins' type='MaterialCommunityIcons' />
+                  <Text style={styles.costText}>{printer.cost}</Text>
+                </Col>
+                <Col size={3} style={styles.addressCol}>
+                  <Text style={styles.addressText}>{printer.address}</Text>
+                </Col>
+                <Col size={1} style={styles.arrowCol}>
+                  <Icon style={styles.addressIcon} active name='keyboard-arrow-right' type='MaterialIcons' />
+                </Col>
+              </Grid>
+            </Card>
+            </Callout>
+          </Marker>);
       };
 
       content = (
@@ -111,6 +131,31 @@ const styles = {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  costCol: {
+    backgroundColor: '#3F51B5',
+    padding: 4,
+  },
+  costIcon: {
+    color: 'white',
+    alignSelf: 'center',
+  },
+  costText: {
+    color: 'white',
+    alignSelf: 'center',
+    fontSize: 16,
+  },
+  addressCol: {
+    padding: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addressText: {
+    alignSelf: 'center',
+  },
+  arrowCol: {
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   map: {
     position: 'absolute',
