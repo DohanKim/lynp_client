@@ -90,7 +90,7 @@ export default class NewPrinter extends Component {
             </Item>
             <Item inlineLabel style={styles.inputItem}>
               <Label>Address</Label>
-              <Input onChangeText={(value) => this.setState({adderss: value})} value={this.state.address} />
+              <Input onChangeText={(value) => this.setState({address: value})} value={this.state.address} />
             </Item>
             <Item picker last style={styles.inputItem}>
               <Label>Color Support</Label>
