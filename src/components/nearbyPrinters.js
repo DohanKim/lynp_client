@@ -12,7 +12,7 @@ import {
   Title,
 } from 'native-base';
 import MenuButton from './menuButton';
-import MapView, { Marker, Callout } from 'react-native-maps';
+import MapView, {Marker, Callout} from 'react-native-maps';
 import Global from '../global';
 
 export default class NearbyPrinters extends Component {

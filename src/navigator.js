@@ -6,11 +6,11 @@ import {
 import NearbyPrinters from './components/nearbyPrinters';
 import RequestPrint from './components/requestPrint';
 import MyPrinters from './components/myPrinters';
+import FindLocation from './components/findLocation';
 import NewPrinter from './components/newPrinter';
 import ChargeBalance from './components/chargeBalance';
 import NewCard from './components/newCard';
-import DocumentHistory from './components/documentHistory';
-import PrinterHistory from './components/printerHistory';
+import PrintHistory from './components/printHistory';
 import MyAccount from './components/myAccount';
 import SideBar from './components/sideBar';
 
@@ -27,6 +27,7 @@ const PrintStack = createStackNavigator(
 const PrinterStack = createStackNavigator(
   {
     MyPrinters: {screen: MyPrinters},
+    FindLocation: {screen: FindLocation},
     NewPrinter: {screen: NewPrinter},
   },
   {
@@ -46,11 +47,10 @@ const PaymentStack = createStackNavigator(
 );
 const HistoryStack = createStackNavigator(
   {
-    DocumentHistory: {screen: DocumentHistory},
-    PrinterHistory: {screen: PrinterHistory},
+    PrintHistory: {screen: PrintHistory},
   },
   {
-    initialRouteName: 'DocumentHistory',
+    initialRouteName: 'PrintHistory',
     headerMode: 'none',
   }
 );

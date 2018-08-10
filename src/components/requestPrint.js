@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import {
-} from 'react-native';
-import {
   Container,
   Header,
   Left,
@@ -20,6 +18,7 @@ import {
   FooterTab,
 } from 'native-base';
 import BackButton from './backButton';
+import PrinterCard from './printerCard';
 import {DocumentPicker, DocumentPickerUtil} from 'react-native-document-picker';
 import Global from '../global';
 import Toast from 'react-native-simple-toast';
@@ -95,46 +94,7 @@ export default class RequestPrint extends Component {
           <Right />
         </Header>
         <Content>
-          <Card>
-            <CardItem header bordered>
-              <Text>{this.state.printer.name}</Text>
-            </CardItem>
-            <CardItem>
-              <Icon active name='printer' type='MaterialCommunityIcons' />
-              <Text>Model</Text>
-              <Right>
-                <Text>{this.state.printer.model}</Text>
-              </Right>
-            </CardItem>
-            <CardItem>
-              <Icon active name='color-palette' />
-              <Text>Color</Text>
-              <Right>
-                <Text>{this.state.printer.isColorAvailable? 'Yes': 'No'}</Text>
-              </Right>
-            </CardItem>
-            <CardItem>
-              <Icon active name='coins' type='MaterialCommunityIcons' />
-              <Text>Cost</Text>
-              <Right>
-                <Text>{this.state.printer.cost}</Text>
-              </Right>
-            </CardItem>
-            <CardItem>
-              <Icon active name='person' />
-              <Text>Owner</Text>
-              <Right>
-                <Text>{this.state.printer.owner}</Text>
-              </Right>
-            </CardItem>
-            <CardItem>
-              <Icon active name='address' type='Entypo' />
-              <Text>Address</Text>
-              <Right>
-                <Text>{this.state.printer.address}</Text>
-              </Right>
-            </CardItem>
-          </Card>
+          <PrinterCard printer={this.state.printer} />
           <Item style={styles.fileForm}>
             <Icon active name='attachment' type='Entypo' style={styles.fileIcon} />
             <Input disabled style={styles.fileName} placeholder={this.state.file? this.state.file.fileName: ''}/>
