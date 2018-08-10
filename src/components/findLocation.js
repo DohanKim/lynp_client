@@ -16,6 +16,7 @@ import {
 import BackButton from './backButton';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import MapView, {Marker, Callout} from 'react-native-maps';
+import MarkerImage from '../../assets/marker_image.png';
 import Secret from '../secret';
 
 export default class FindLocation extends Component {
@@ -42,7 +43,7 @@ export default class FindLocation extends Component {
   render() {
     let marker = null;
     if (this.state.region) {
-      marker = (<Marker coordinate = {{latitude: this.state.region.latitude, longitude: this.state.region.longitude}} />);
+      marker = (<Marker image={MarkerImage} coordinate = {{latitude: this.state.region.latitude, longitude: this.state.region.longitude}} />);
     }
     return (
       <Container>
