@@ -31,9 +31,7 @@ export default class ChargeBalance extends Component {
     super(props);
     this.state = {
       balance : null,
-      card : {
-        number : '',
-      },
+      card: {},
       chargeCost: '0',
     }
   }
@@ -78,7 +76,8 @@ export default class ChargeBalance extends Component {
   }
 
   render() {
-    let isCardExist = this.state.card.number.length > 0;
+    console.log("CARD:", this.state.card);
+    let isCardExist = this.state.card.number && this.state.card.number.length > 0;
     let cardNumber = null;
     if (isCardExist) {
       cardNumber = ( 
