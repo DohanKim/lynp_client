@@ -55,12 +55,6 @@ export default class ChargeBalance extends Component {
       .then((rjson) => {
         console.log(rjson);
 
-        if (Object.keys(rjson.card).length == 0){
-          console.log("card is not registered");
-        } else {
-          console.log("card is registered");
-        }
-
         this.setState({balance: rjson.balance, card: rjson.card});
       });
   }

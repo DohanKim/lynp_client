@@ -89,7 +89,7 @@ export default class NewCard extends Component {
       <Container>
         <Header>
           <Body>
-            <Title> New Card </Title>
+            <Title>{card.number.length > 0? 'Update': 'New'} Card</Title>
           </Body>
         </Header>
         <Content style={styles.content}>
