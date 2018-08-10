@@ -37,7 +37,7 @@ export default class NewCard extends Component {
 
     console.log(card);
 
-    if(card.number.length > 0){
+    if(card.number){
       this.CCInput.setValues({ number : card['number'], expiry : card['expire'], cvc : card['cvc'] });
       this.state.card = card;
     }
@@ -89,7 +89,7 @@ export default class NewCard extends Component {
       <Container>
         <Header>
           <Body>
-            <Title>{card.number.length > 0? 'Update': 'New'} Card</Title>
+            <Title>{card.number? 'Update': 'New'} Card</Title>
           </Body>
         </Header>
         <Content style={styles.content}>
@@ -102,7 +102,7 @@ export default class NewCard extends Component {
         <Footer style={styles.footer}>
           <FooterTab style={styles.footerTab}>
             <Button full onPress = { () => this._registerCard() }>
-              <Text style={styles.footerText}>{card.number.length > 0 ? 'Update' : 'Register'}</Text>
+              <Text style={styles.footerText}>{card.number? 'Update' : 'Register'}</Text>
             </Button>
           </FooterTab>
         </Footer>

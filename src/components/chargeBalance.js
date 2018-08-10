@@ -77,7 +77,7 @@ export default class ChargeBalance extends Component {
 
   render() {
     console.log("CARD:", this.state.card);
-    let isCardExist = this.state.card.number && this.state.card.number.length > 0;
+    let isCardExist = this.state.card.number;
     let cardNumber = null;
     if (isCardExist) {
       cardNumber = ( 
