@@ -4,6 +4,7 @@ import {
   Platform,
 } from 'react-native';
 import {
+  View,
   Content,
   Text,
   List,
@@ -15,6 +16,7 @@ import {
   Badge,
 } from 'native-base';
 import logo from '../../assets/logo.png';
+import Global from '../global';
 
 const data = [
   {
@@ -68,6 +70,9 @@ class SideBar extends Component {
       <Container>
         <Content bounces={false} style={styles.content}>
           <Image source={logo} style={styles.logo}/> 
+          <View>
+            <Text style={styles.hello}>Hello, <Text style={styles.username}>{Global.username}</Text>!</Text>
+          </View>
           <List dataArray={data} renderRow={renderRow}/>
         </Content>
       </Container>
@@ -85,9 +90,17 @@ const styles = {
     height: 100,
     resizeMode: 'contain',
     marginTop: 20,
-    marginBottom: 40,
+    marginBottom: 30,
     marginLeft: 10,
     marginRight: 10,
+  },
+  hello: {
+    fontSize: 16,
+    alignSelf: 'center',
+    marginBottom: 40,
+  },
+  username: {
+    color: '#1417ce',
   },
   icon: { 
     color: '#777', 

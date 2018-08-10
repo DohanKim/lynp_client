@@ -41,6 +41,7 @@ export default class NearbyPrinters extends Component {
         longitudeDelta : 0.02,
       };
 
+      console.log("location:", currentRegion);
       this.setState({currentRegion: currentRegion});
     });
   }
@@ -50,6 +51,7 @@ export default class NearbyPrinters extends Component {
     fetch(`${Global.host}/api/printers`, {headers : Global.headers})
       .then((res) => res.json())
       .then((rjson) => {
+        console.log("printer:", rjson);
         this.setState({printers: rjson});
       })
       .catch((err) => console.log(err));

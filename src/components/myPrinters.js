@@ -57,8 +57,8 @@ export default class MyPrinters extends Component {
           <ListItem key={i}>
             <Body>
               <Text>{printer.name}</Text>
-              <Text note>{printer.model}</Text>
-              <Text note>{printer.address}</Text>
+              <Text note>Model: {printer.model}</Text>
+              <Text note>Address: {printer.address}</Text>
             </Body>
             <Right>
               <Icon active name='coins' type='MaterialCommunityIcons' />

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {
+  createSwitchNavigator,
   createStackNavigator,
   createDrawerNavigator,
 } from 'react-navigation';
@@ -13,6 +14,8 @@ import NewCard from './components/newCard';
 import PrintHistory from './components/printHistory';
 import MyAccount from './components/myAccount';
 import SideBar from './components/sideBar';
+import SignIn from './components/signIn';
+import SignUp from './components/signUp';
 
 const PrintStack = createStackNavigator(
   {
@@ -64,7 +67,7 @@ const SettingStack = createStackNavigator(
   }
 );
 
-const Navigator = createDrawerNavigator(
+const DrawerNavigator = createDrawerNavigator(
   {
     Print: {screen: PrintStack},
     Printer: {screen: PrinterStack},
@@ -78,6 +81,27 @@ const Navigator = createDrawerNavigator(
       activeTintColor: "#e91e63",
     },
     contentComponent: ((props) => <SideBar {...props} />)
+  }
+);
+
+const AuthStack = createStackNavigator(
+  { 
+    SignIn: SignIn,
+    SignUp: SignUp,
+  },
+  {
+    initialRouteName: 'SignIn',
+    headerMode: 'none',
+  }
+);
+
+const Navigator = createSwitchNavigator(
+  {
+    Auth: AuthStack,
+    App: DrawerNavigator,
+  },
+  {
+    initialRouteName: 'Auth',
   }
 );
 
