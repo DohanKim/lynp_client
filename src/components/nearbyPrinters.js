@@ -34,6 +34,7 @@ export default class NearbyPrinters extends Component {
       currentRegion: null,
       printers: null,
       selectedMarker: null,
+      duration: 0,
     }
 
     this._markers = [];
@@ -106,7 +107,7 @@ export default class NearbyPrinters extends Component {
             <Callout tooltip={true} onPress={() => this.props.navigation.navigate('RequestPrint', {printer: printer})}>
               <Card>
               <Grid>
-                <Col size={1} style={styles.durationCol}>
+                <Col size={2} style={styles.durationCol}>
                   <FontAwesome5Icon style={styles.durationIcon} size={20} name='walking' />
                   <Text style={styles.durationText}>{this.state.duration} MINS</Text>
                 </Col>
@@ -131,7 +132,7 @@ export default class NearbyPrinters extends Component {
               destination={this._markers[this.state.selectedMarker].props.coordinate}
               apikey={Secret.googleDirectionAPIKey} 
               strokeColor="#3F51B5"
-              strokeWidth={3}
+              strokeWidth={5}
               mode="walking"
               onReady={this._onDirectionReady}
             />)}
