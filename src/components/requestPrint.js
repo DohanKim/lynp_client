@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import {
+  Alert,
+} from 'react-native';
+import {
   Container,
   Header,
   Left,
@@ -41,6 +44,7 @@ export default class RequestPrint extends Component {
       (err, res) => {
         if(res){
           console.log(res.uri, res.type, res.fileName, res.fileSize);  
+
           this.setState({file: res});
         } else {
           console.log(err);
@@ -72,12 +76,12 @@ export default class RequestPrint extends Component {
       method : 'POST',
       headers : headers,
       body : body
-    }).then((response) => {
-      response.json().then((data) => {
-        console.log(data);
-        Toast.show(data.msg);
-      });
-    }).catch((err) => console.log(err));
+    })
+      .then((response) => response.json)
+      .then((rjson) => {
+        this.props.navigation.navigate('PrintResult', {result: rjson});
+      })
+      .catch((err) => console.log(err));
   }
 
   render() {

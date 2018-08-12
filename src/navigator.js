@@ -6,6 +6,7 @@ import {
 } from 'react-navigation';
 import NearbyPrinters from './components/nearbyPrinters';
 import RequestPrint from './components/requestPrint';
+import PrintResult from './components/printResult';
 import MyPrinters from './components/myPrinters';
 import FindLocation from './components/findLocation';
 import NewPrinter from './components/newPrinter';
@@ -21,6 +22,7 @@ const PrintStack = createStackNavigator(
   {
     NearbyPrinters: {screen: NearbyPrinters},
     RequestPrint: {screen: RequestPrint},
+    PrintResult: {screen: PrintResult},
   }, 
   {
     initialRouteName: 'NearbyPrinters',

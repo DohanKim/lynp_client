@@ -45,6 +45,7 @@ export default class FindLocation extends Component {
     if (this.state.region) {
       marker = (<Marker image={MarkerImage} coordinate = {{latitude: this.state.region.latitude, longitude: this.state.region.longitude}} />);
     }
+
     return (
       <Container>
         <Header>
@@ -64,7 +65,7 @@ export default class FindLocation extends Component {
             returnKeyType={'search'}
             listViewDisplayed={false}
             fetchDetails={true}
-            renderDescription={row => row.description}
+            renderDescription={(row) => {conosle.log(row); return row.description;}}
             onPress={(data, details = null) => {
               this._setRegion(details);
             }}
@@ -90,7 +91,7 @@ export default class FindLocation extends Component {
         </View>
         <Footer style={styles.footer}>
           <FooterTab style={styles.footerTab}>
-            <Button full onPress={() => this.props.navigation.navigate('NewPrinter', {region: this.state.region, address: this.state.address})}>
+            <Button full disabled={this.state.region == null} onPress={() => this.props.navigation.navigate('NewPrinter', {region: this.state.region, address: this.state.address})}>
               <Icon active name='arrow-right' type='Entypo' />
               <Text style={styles.footerText}>Next</Text>
             </Button>
