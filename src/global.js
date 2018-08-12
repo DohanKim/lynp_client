@@ -1,5 +1,5 @@
 var Global = {
-  host: 'http://172.31.99.2:3000', 
+  host: 'http://128.54.117.204:3000', 
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',

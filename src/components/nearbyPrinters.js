@@ -32,8 +32,10 @@ export default class NearbyPrinters extends Component {
     this.state = {
       currentRegion: null,
       printers: null,
-      selectedRegion: null,
+      selectedMarker: null,
     }
+
+    this._markers = [];
   }
 
   componentWillMount() {
@@ -71,48 +73,29 @@ export default class NearbyPrinters extends Component {
       .catch((err) => console.log(err));
   }
 
-  _showDirection = () => {
-    if(this.state.selectedRegion) {
-      console.log("Show Direction");
-      const currentRegion = {
-        latitude : this.state.currentRegion.latitude,
-        longitude : this.state.currentRegion.longitude,
-      };
-
-      return(
-        <MapViewDirections
-          origin={currentRegion}
-          destination={this.state.selectedRegion}
-          apikey={Secret.googleDirectionAPIKey} 
-          strokeColor="#3F51B5"
-          strokeWidth={3}
-          mode="walking"
-        />
-      );
-    }
-    else {
-      return null;
-    }
+  _onDirectionReady = (result) => {
+    this.setState({duration: Math.ceil(result.duration)});
+    setTimeout(() => this._markers[this.state.selectedMarker].showCallout(), 0);
   }
 
   render() {
     let content;
     if (this.state.currentRegion && this.state.printers) {
-      let renderPrinter = (printer) => {
+      let renderPrinter = (printer, i) => {
         if (!printer.isOn) return null;
         return (
-          // TODO: change marker icon
-          // Showing Route?
-          <Marker key={printer._id}
+          <Marker 
+            key={i}
+            ref={(c) => {this._markers[i] = c}}
             image={MarkerImage}
             coordinate={{latitude: printer.location[0], longitude: printer.location[1]}}
-            onPress={e => this.setState({selectedRegion: e.nativeEvent.coordinate})}>
+            onPress={(e) => this.setState({selectedMarker: i})}>
             <Callout tooltip={true} onPress={() => this.props.navigation.navigate('RequestPrint', {printer: printer})}>
               <Card>
               <Grid>
                 <Col size={1} style={styles.costCol}>
-                  <Icon style={styles.costIcon} active name='coins' type='MaterialCommunityIcons' />
-                  <Text style={styles.costText}>{printer.cost}</Text>
+                  <Icon style={styles.costIcon} active name='time' />
+                  <Text style={styles.costText}>{this.state.duration} MINS</Text>
                 </Col>
                 <Col size={3} style={styles.addressCol}>
                   <Text style={styles.addressText}>{printer.address}</Text>
@@ -127,15 +110,22 @@ export default class NearbyPrinters extends Component {
       };
 
       content = (
-        <MapView initialRegion={this.state.currentRegion} style={styles.map} showsUserLocation={true} onPress={() => this.setState({selectedRegion: null})}>
+        <MapView initialRegion={this.state.currentRegion} style={styles.map} showsUserLocation={true} onPress={() => this.setState({selectedMarker: null})}>
           {this.state.printers.map(renderPrinter)}
-          {this._showDirection()}
+          {this.state.selectedMarker != null && (
+            <MapViewDirections
+              origin={this.state.currentRegion}
+              destination={this._markers[this.state.selectedMarker].props.coordinate}
+              apikey={Secret.googleDirectionAPIKey} 
+              strokeColor="#3F51B5"
+              strokeWidth={3}
+              mode="walking"
+              onReady={this._onDirectionReady}
+            />)}
         </MapView>);
     } else {
       content = <Spinner />;
     }
-
-    console.log(this.state);
 
     return (
       <Container>
