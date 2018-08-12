@@ -23,9 +23,6 @@ import MapView, {Marker, Callout} from 'react-native-maps';
 import MapViewDirections from 'react-native-maps-directions';
 import Global from '../global';
 import MarkerImage from '../../assets/marker_image.png';
-import CircleImage from '../../assets/circle.png';
-import SmallCircleImage from '../../assets/small_circle.png';
-import CurrentLocation from '../../assets/current_location.png';
 import Secret from '../secret';
 
 export default class NearbyPrinters extends Component {
@@ -87,7 +84,7 @@ export default class NearbyPrinters extends Component {
           origin={currentRegion}
           destination={this.state.selectedRegion}
           apikey={Secret.googleDirectionAPIKey} 
-          strokeColor="hotpink"
+          strokeColor="#3F51B5"
           strokeWidth={3}
           mode="walking"
         />

@@ -65,7 +65,7 @@ export default class FindLocation extends Component {
             returnKeyType={'search'}
             listViewDisplayed={false}
             fetchDetails={true}
-            renderDescription={(row) => {conosle.log(row); return row.description;}}
+            renderDescription={(row) => {return row.description;}}
             onPress={(data, details = null) => {
               this._setRegion(details);
             }}
