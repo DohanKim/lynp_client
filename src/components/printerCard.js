@@ -28,7 +28,7 @@ export default class PrinterCard extends Component {
         <CardItem>
           <Left>
             <Icon active name='color-palette' />
-            <Text>Color</Text>
+            <Text>Color Support</Text>
           </Left>
           <Body>
             <Text>{this.props.printer.isColorAvailable? 'Yes': 'No'}</Text>
@@ -59,15 +59,6 @@ export default class PrinterCard extends Component {
           </Left>
           <Body>
             <Text>{this.props.printer.address}</Text>
-          </Body>
-        </CardItem>
-        <CardItem>
-          <Left>
-            <Icon active name='numeric' type='MaterialCommunityIcons' />
-            <Text>ID</Text>
-          </Left>
-          <Body>
-            <Text>{this.props.printer.printerId}</Text>
           </Body>
         </CardItem>
       </Card>

@@ -24,6 +24,7 @@ import MapViewDirections from 'react-native-maps-directions';
 import Global from '../global';
 import MarkerImage from '../../assets/marker_image.png';
 import Secret from '../secret';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default class NearbyPrinters extends Component {
   constructor(props) {
@@ -43,7 +44,8 @@ export default class NearbyPrinters extends Component {
     this.intervalId = setInterval(this._getPrinters, 3000);
      this._getCurrentLocation();
   }
-   componentWillUnmount() {
+
+  componentWillUnmount() {
     clearInterval(this.intervalId);
   }
 
@@ -78,6 +80,17 @@ export default class NearbyPrinters extends Component {
     setTimeout(() => this._markers[this.state.selectedMarker].showCallout(), 0);
   }
 
+  _truncateString = (str, length) => {
+    const ending = '...';
+
+    if (str.length > length) {
+      return str.substring(0, length - ending.length) + ending;
+    } else {
+      return str;
+    }
+  };
+
+
   render() {
     let content;
     if (this.state.currentRegion && this.state.printers) {
@@ -93,12 +106,12 @@ export default class NearbyPrinters extends Component {
             <Callout tooltip={true} onPress={() => this.props.navigation.navigate('RequestPrint', {printer: printer})}>
               <Card>
               <Grid>
-                <Col size={1} style={styles.costCol}>
-                  <Icon style={styles.costIcon} active name='time' />
-                  <Text style={styles.costText}>{this.state.duration} MINS</Text>
+                <Col size={1} style={styles.durationCol}>
+                  <FontAwesome5Icon style={styles.durationIcon} size={20} name='walking' />
+                  <Text style={styles.durationText}>{this.state.duration} MINS</Text>
                 </Col>
-                <Col size={3} style={styles.addressCol}>
-                  <Text style={styles.addressText}>{printer.address}</Text>
+                <Col size={4} style={styles.addressCol}>
+                  <Text style={styles.addressText}>{this._truncateString(printer.address, 25)}</Text>
                 </Col>
                 <Col size={1} style={styles.arrowCol}>
                   <Icon style={styles.addressIcon} active name='keyboard-arrow-right' type='MaterialIcons' />
@@ -152,15 +165,17 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  costCol: {
+  durationCol: {
     backgroundColor: '#3F51B5',
     padding: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  costIcon: {
+  durationIcon: {
     color: 'white',
     alignSelf: 'center',
   },
-  costText: {
+  durationText: {
     color: 'white',
     alignSelf: 'center',
     fontSize: 16,
