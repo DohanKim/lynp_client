@@ -29,7 +29,7 @@ export default class MyAccount extends Component {
             <MenuButton {...this.props}/>
           </Left>
           <Body>
-            <Title>My Account</Title>
+            <Title>Setting</Title>
           </Body>
           <Right />
         </Header>

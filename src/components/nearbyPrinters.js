@@ -34,9 +34,15 @@ export default class NearbyPrinters extends Component {
     }
   }
 
-  componentWillMount = () => {
+  componentWillMount() {
     this._getPrinters();
+    this.intervalId = setInterval(this._getPrinters, 3000);
+
     this._getCurrentLocation();
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.intervalId);
   }
 
   _getCurrentLocation = () => {
@@ -74,6 +80,7 @@ export default class NearbyPrinters extends Component {
     let content;
     if (this.state.currentRegion && this.state.printers) {
       let renderPrinter = (printer) => {
+        if (!printer.isOn) return null;
         return (
           // TODO: change marker icon
           // Showing Route?

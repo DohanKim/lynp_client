@@ -15,10 +15,13 @@ import {
   ListItem,
   Thumbnail,
   Item,
+  Switch,
   Text,
 } from 'native-base';
+import update from 'immutability-helper';
 import MenuButton from './menuButton';
 import Global from '../global';
+import Toast from 'react-native-simple-toast';
 
 export default class MyPrinters extends Component {
 	constructor(props) {
@@ -49,6 +52,24 @@ export default class MyPrinters extends Component {
       });
   }
 
+  _togglePrinterStatus = (printer, i) => {
+    let isOn = this.state.printers[i].isOn;
+    this.setState({printers: update(this.state.printers, {[i]: {isOn: {$set: !isOn}}})})
+
+    fetch(`${Global.host}/api/printers/${printer._id}/toggleOnOff`, {
+      method: 'POST',
+      headers : Global.headers,
+    })
+      .then((response) => response.json())
+      .then((rjson) => {
+        console.log(rjson);
+        if (!rjson.success) {
+          Toast.show(rjson.msg); 
+          this._getPrinters();
+        }
+      });
+  }
+
   render() {
     let listItems = (
       <ListItem>
@@ -67,8 +88,7 @@ export default class MyPrinters extends Component {
               <Text note>Address: {printer.address}</Text>
             </Body>
             <Right>
-              <Icon active name='coins' type='MaterialCommunityIcons' />
-              <Text note>{printer.cost}</Text>
+              <Switch value={printer.isOn} onValueChange={() => this._togglePrinterStatus(printer, i)} />
             </Right>
           </ListItem>
         );
@@ -89,6 +109,9 @@ export default class MyPrinters extends Component {
         <View style={styles.full}>
           <Content style={styles.full}>
             <List>
+              <ListItem itemHeader first>
+                <Text>You can turn ON/OFF the Printer Sharing</Text>
+              </ListItem>
               {listItems}
             </List>
           </Content>
