@@ -28,7 +28,6 @@ import SmallCircleImage from '../../assets/small_circle.png';
 import CurrentLocation from '../../assets/current_location.png';
 import Secret from '../secret';
 
-
 export default class NearbyPrinters extends Component {
   constructor(props) {
     super(props);
@@ -36,7 +35,6 @@ export default class NearbyPrinters extends Component {
     this.state = {
       currentRegion: null,
       printers: null,
-      isMapReady: false,
       selectedRegion: null,
     }
   }
@@ -50,15 +48,14 @@ export default class NearbyPrinters extends Component {
     clearInterval(this.intervalId);
   }
 
-
   _getCurrentLocation = () => {
     console.log('get Current Location');
     navigator.geolocation.getCurrentPosition((position) => {
       const currentRegion = {
-        longitude : -117.24170878046698, 
-        latitude : 32.888258508065085,
-        latitudeDelta : 0.02,
-        longitudeDelta : 0.02,
+        longitude : position.coords.longitude, 
+        latitude : position.coords.latitude,
+        latitudeDelta : 0.005,
+        longitudeDelta : 0.005,
       };
 
       console.log("location:", currentRegion);
@@ -77,14 +74,8 @@ export default class NearbyPrinters extends Component {
       .catch((err) => console.log(err));
   }
 
-  _onMapReady = () => {
-    console.log("MAPREADY");
-    this.setState({isMapReady: true});
-  }
-
   _showDirection = () => {
-    
-    if(this.state.selectedRegion){
+    if(this.state.selectedRegion) {
       console.log("Show Direction");
       const currentRegion = {
         latitude : this.state.currentRegion.latitude,
@@ -102,7 +93,7 @@ export default class NearbyPrinters extends Component {
         />
       );
     }
-    else{
+    else {
       return null;
     }
   }
@@ -140,8 +131,6 @@ export default class NearbyPrinters extends Component {
 
       content = (
         <MapView initialRegion={this.state.currentRegion} style={styles.map} showsUserLocation={true} onPress={() => this.setState({selectedRegion: null})}>
-{/*          <Marker image={CurrentLocation}
-          coordinate={{latitude: this.state.currentRegion.latitude, longitude: this.state.currentRegion.longitude}}/>*/}
           {this.state.printers.map(renderPrinter)}
           {this._showDirection()}
         </MapView>);
