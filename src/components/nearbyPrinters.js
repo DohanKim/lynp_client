@@ -20,8 +20,14 @@ import {
 } from 'native-base';
 import MenuButton from './menuButton';
 import MapView, {Marker, Callout} from 'react-native-maps';
+import MapViewDirections from 'react-native-maps-directions';
 import Global from '../global';
 import MarkerImage from '../../assets/marker_image.png';
+import CircleImage from '../../assets/circle.png';
+import SmallCircleImage from '../../assets/small_circle.png';
+import CurrentLocation from '../../assets/current_location.png';
+import Secret from '../secret';
+
 
 export default class NearbyPrinters extends Component {
   constructor(props) {
@@ -31,26 +37,26 @@ export default class NearbyPrinters extends Component {
       currentRegion: null,
       printers: null,
       isMapReady: false,
+      selectedRegion: null,
     }
   }
 
   componentWillMount() {
     this._getPrinters();
     this.intervalId = setInterval(this._getPrinters, 3000);
-
-    this._getCurrentLocation();
+     this._getCurrentLocation();
   }
-
-  componentWillUnmount() {
+   componentWillUnmount() {
     clearInterval(this.intervalId);
   }
+
 
   _getCurrentLocation = () => {
     console.log('get Current Location');
     navigator.geolocation.getCurrentPosition((position) => {
       const currentRegion = {
-        longitude : position.coords.longitude,
-        latitude : position.coords.latitude,
+        longitude : -117.24170878046698, 
+        latitude : 32.888258508065085,
         latitudeDelta : 0.02,
         longitudeDelta : 0.02,
       };
@@ -76,6 +82,31 @@ export default class NearbyPrinters extends Component {
     this.setState({isMapReady: true});
   }
 
+  _showDirection = () => {
+    
+    if(this.state.selectedRegion){
+      console.log("Show Direction");
+      const currentRegion = {
+        latitude : this.state.currentRegion.latitude,
+        longitude : this.state.currentRegion.longitude,
+      };
+
+      return(
+        <MapViewDirections
+          origin={currentRegion}
+          destination={this.state.selectedRegion}
+          apikey={Secret.googleDirectionAPIKey} 
+          strokeColor="hotpink"
+          strokeWidth={3}
+          mode="walking"
+        />
+      );
+    }
+    else{
+      return null;
+    }
+  }
+
   render() {
     let content;
     if (this.state.currentRegion && this.state.printers) {
@@ -86,7 +117,8 @@ export default class NearbyPrinters extends Component {
           // Showing Route?
           <Marker key={printer._id}
             image={MarkerImage}
-            coordinate={{latitude: printer.location[0], longitude: printer.location[1]}}>
+            coordinate={{latitude: printer.location[0], longitude: printer.location[1]}}
+            onPress={e => this.setState({selectedRegion: e.nativeEvent.coordinate})}>
             <Callout tooltip={true} onPress={() => this.props.navigation.navigate('RequestPrint', {printer: printer})}>
               <Card>
               <Grid>
@@ -107,12 +139,17 @@ export default class NearbyPrinters extends Component {
       };
 
       content = (
-        <MapView initialRegion={this.state.currentRegion} style={styles.map}>
+        <MapView initialRegion={this.state.currentRegion} style={styles.map} showsUserLocation={true} onPress={() => this.setState({selectedRegion: null})}>
+{/*          <Marker image={CurrentLocation}
+          coordinate={{latitude: this.state.currentRegion.latitude, longitude: this.state.currentRegion.longitude}}/>*/}
           {this.state.printers.map(renderPrinter)}
+          {this._showDirection()}
         </MapView>);
     } else {
       content = <Spinner />;
     }
+
+    console.log(this.state);
 
     return (
       <Container>
