@@ -39,8 +39,27 @@ export default class RequestPrint extends Component {
       printer: props.navigation.getParam('printer', {}),
       numberOfPages: 0,
       isLoading: false,
+      user: null,
     }
   }
+
+  componentWillMount() {
+    this._getUserInformation();
+  }
+
+  _getUserInformation = () => {
+    fetch(`${Global.host}/api/me`, {
+      method : 'GET',
+      headers : Global.headers,
+    })
+      .then((response) => response.json())
+      .then((rjson) => {
+        this.setState({user: rjson});
+        console.log("USER", rjson);
+      })
+      .catch((err) => console.log(err));
+  }
+
 
   _pickFile = () => {
     DocumentPicker.show(
@@ -99,6 +118,11 @@ export default class RequestPrint extends Component {
   }
 
   _onButtonPress = () => {
+    if (!this.state.user.card.number) {
+      Alert.alert('Payment information is not registered.');
+      return;
+    }
+
     Alert.alert(
       'Payment Confirmation',
       `Total Cost: $ ${this.state.printer.cost * this.state.numberOfPages}`,

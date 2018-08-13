@@ -18,6 +18,7 @@ import {
 import { CreditCardInput } from "react-native-credit-card-input";
 import Global from '../global';
 import Toast from 'react-native-simple-toast';
+import BackButton from './backButton';
 
 export default class NewCard extends Component {
 
@@ -88,6 +89,9 @@ export default class NewCard extends Component {
     return (
       <Container>
         <Header>
+          <Left>
+            <BackButton {...this.props}/>
+          </Left>
           <Body>
             <Title>{card.number? 'Update': 'New'} Card</Title>
           </Body>

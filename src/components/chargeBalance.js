@@ -119,30 +119,6 @@ export default class ChargeBalance extends Component {
               </Right>
             </CardItem>
           </Card>
-          <Card>
-            <CardItem header bordered>
-              <Text>Balance</Text>
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Icon name = 'coins' type='MaterialCommunityIcons' />
-                <Text>{this.state.balance}</Text>
-              </Left>
-            </CardItem>
-            <CardItem>
-              <Left>
-                <Item inlineLabel>
-                  <Label>Charge $</Label>
-                  <Input onChangeText={(value) => this.setState({chargeCost: value})} value={this.state.chargeCost} />
-                </Item>
-              </Left>
-              <Right>
-                <Button info onPress={this._chargeBalance}>
-                  <Text>Charge</Text>
-                </Button>
-              </Right>
-            </CardItem>
-          </Card>
 
         </Content>
       </Container>

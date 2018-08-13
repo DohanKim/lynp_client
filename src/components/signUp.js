@@ -112,7 +112,7 @@ export default class SignUp extends Component{
               <Input placeholder = "Password" secureTextEntry={ true } onChangeText = { (text) => this.setState({ password : text}) }/>
             </Item>
             <Item success = {this.state.isvalid && this.state.isentered} error = {!this.state.isvalid && this.state.isentered}>
-              <Input placeholder = "Password conformation" value = { this.state.checked_password } secureTextEntry={ true } onChangeText = { (text) => this._checkequalpassword(text) }/>
+              <Input placeholder = "Password confirmation" value = { this.state.checked_password } secureTextEntry={ true } onChangeText = { (text) => this._checkequalpassword(text) }/>
               {this.state.isentered ? this._showcheckresult() : <View/> }
             </Item>
 
