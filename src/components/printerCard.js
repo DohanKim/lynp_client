@@ -31,7 +31,7 @@ export default class PrinterCard extends Component {
             <Text>Color Support</Text>
           </Left>
           <Body>
-            <Text>{this.props.printer.isColorAvailable? 'Yes': 'No'}</Text>
+            <Text>{this.props.printer.isColorSupported? 'Yes': 'No'}</Text>
           </Body>
         </CardItem>
         <CardItem>

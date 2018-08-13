@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Platform, NativeModules } from 'react-native';
 import {
   View,
   Content,
@@ -19,6 +20,7 @@ import {
 import BackButton from './backButton';
 import Global from '../global';
 import Toast from 'react-native-simple-toast';
+const { StatusBarManager } = NativeModules;
 
 export default class SignUp extends Component{
   constructor(props){
@@ -130,7 +132,7 @@ const styles = {
   container : {
     flex : 1,
     justifyContent : 'center',
-    paddingTop: 20,
+    paddingTop: StatusBarManager.HEIGHT,
   },
   login_fail : {
     color : 'red',
